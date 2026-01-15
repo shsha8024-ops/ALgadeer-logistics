@@ -228,27 +228,41 @@ function InvoicePage() {
   const balance = t1Total - t2Total;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)' }}>
       {/* Header */}
-      <header className="top bg-white shadow-sm no-print">
+      <header className="top no-print" style={{ background: 'var(--color-card-bg)' }}>
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="brand flex items-center gap-4">
             <div className="logo">غ</div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-800">فواتير العميل</h1>
-              <p className="text-sm text-gray-600">
+              <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>فواتير العميل</h1>
+              <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
                 {client.name} — {client.phone} — {client.location}
               </p>
             </div>
           </div>
           
-          <div className="flex gap-3">
-            <Link to="/" className="btn btn-ghost">
-              ← العملاء
-            </Link>
-            <Link to="/reports" className="btn btn-ghost">
-              التقارير
-            </Link>
+          <div className="flex items-center gap-4">
+            <div className="text-right">
+              <div className="text-sm font-medium" style={{ color: 'var(--color-text)' }}>
+                {user?.name}
+              </div>
+              <div className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                {user?.role === 'admin' ? 'مدير' : 'موظف'}
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <Link to="/" className="btn btn-ghost">
+                ← العملاء
+              </Link>
+              <Link to="/reports" className="btn btn-ghost">
+                التقارير
+              </Link>
+              <button onClick={logout} className="btn btn-danger">
+                تسجيل خروج
+              </button>
+            </div>
           </div>
         </div>
       </header>
