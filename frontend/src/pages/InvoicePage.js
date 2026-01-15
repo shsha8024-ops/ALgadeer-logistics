@@ -440,10 +440,51 @@ function InvoicePage() {
 
       {/* Hidden PDF Content */}
       <div id="pdf-content" style={{ display: 'none', padding: '40px', backgroundColor: '#ffffff', direction: 'rtl' }}>
+        {/* Header with Logo and Contact Info */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', borderBottom: '3px solid #667eea', paddingBottom: '20px' }}>
+          {/* Logo and Company Name */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+            <img 
+              src="/logo-square.png" 
+              alt="الغدير" 
+              style={{ 
+                width: '80px', 
+                height: '80px', 
+                objectFit: 'contain',
+                border: '2px solid #667eea',
+                borderRadius: '12px',
+                padding: '5px',
+                backgroundColor: 'white'
+              }} 
+            />
+            <div>
+              <h1 style={{ fontSize: '24px', fontWeight: 'bold', color: '#667eea', margin: '0' }}>
+                الغدير نقليات و تخليص كمركي
+              </h1>
+              <p style={{ fontSize: '14px', color: '#666', margin: '5px 0 0 0' }}>
+                {client.name} — {activeInvoice.name}
+              </p>
+            </div>
+          </div>
+
+          {/* Contact Info */}
+          <div style={{ textAlign: 'left', fontSize: '13px', lineHeight: '1.8' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
+              <span style={{ fontSize: '18px' }}>📲</span>
+              <span style={{ fontWeight: 'bold', color: '#667eea' }}>07504084359</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
+              <img src="/whatsapp.png" alt="WhatsApp" style={{ width: '16px', height: '16px', objectFit: 'contain' }} />
+              <span style={{ fontWeight: 'bold', color: '#25D366' }}>07502498211</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '16px' }}>✉️</span>
+              <span style={{ color: '#666' }}>Starzeki001@gmail.com</span>
+            </div>
+          </div>
+        </div>
+
         <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-          <h1 style={{ fontSize: '28px', marginBottom: '10px', color: '#667eea' }}>
-            {client.name} - {activeInvoice.name}
-          </h1>
           <p style={{ fontSize: '16px', color: '#666' }}>التاريخ: {invoiceDate}</p>
         </div>
 
