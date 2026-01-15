@@ -21,7 +21,7 @@ app.add_middleware(
 # MongoDB Connection
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
 client = AsyncIOMotorClient(MONGO_URL)
-db = client.alghadeer_db
+db = client[os.getenv("MONGO_DB_NAME", "alghadeer_db")]
 
 # Collections
 clients_collection = db.clients
