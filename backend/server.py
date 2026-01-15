@@ -144,7 +144,7 @@ async def delete_client(client_id: str):
         raise HTTPException(status_code=404, detail="Client not found")
     
     # Delete all invoices
-    invoices = await invoices_collection.find({"clientId": client_id}).to_list(1000)
+    invoices = await invoices_collection.find({"clientId": client_id}).limit(100).to_list(100)
     invoice_ids = [inv["id"] for inv in invoices]
     
     await invoices_collection.delete_many({"clientId": client_id})
