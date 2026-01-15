@@ -357,8 +357,8 @@ function InvoicePage() {
 
             <hr className="my-6" />
 
-            <button onClick={exportToExcel} className="btn btn-ghost w-full text-sm">
-              📄 Excel (كل فواتير العميل)
+            <button onClick={exportToPDF} className="btn btn-primary w-full text-sm">
+              📄 تصدير PDF
             </button>
           </aside>
 
