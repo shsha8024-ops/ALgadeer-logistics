@@ -435,6 +435,113 @@ function InvoicePage() {
           </section>
         </div>
       </main>
+
+      {/* Hidden PDF Content */}
+      <div id="pdf-content" style={{ display: 'none', padding: '40px', backgroundColor: '#ffffff', direction: 'rtl' }}>
+        <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+          <h1 style={{ fontSize: '28px', marginBottom: '10px', color: '#667eea' }}>
+            {client.name} - {activeInvoice.name}
+          </h1>
+          <p style={{ fontSize: '16px', color: '#666' }}>التاريخ: {invoiceDate}</p>
+        </div>
+
+        {/* Operations Table */}
+        <h2 style={{ fontSize: '22px', marginBottom: '15px', color: '#667eea' }}>العمليات</h2>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '30px' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#667eea' }}>
+              {statement.t1.headerTitles.map((title, idx) => (
+                <th key={idx} style={{ padding: '12px', color: 'white', border: '1px solid #ddd', textAlign: 'center' }}>
+                  {title}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {statement.t1.rows.map((row, idx) => (
+              <tr key={idx} style={{ backgroundColor: idx % 2 === 0 ? '#f9f9f9' : 'white' }}>
+                {row.map((cell, cellIdx) => (
+                  <td key={cellIdx} style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr style={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>
+              <td colSpan={statement.t1.headerTitles.length - 1} style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'right' }}>
+                إجمالي العمليات
+              </td>
+              <td style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'center', color: '#10b981' }}>
+                {calculateTotal(statement.t1)}{client.currency}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+        {/* Payments Table */}
+        <h2 style={{ fontSize: '22px', marginBottom: '15px', color: '#667eea' }}>القبوضات</h2>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '30px' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#667eea' }}>
+              {statement.t2.headerTitles.map((title, idx) => (
+                <th key={idx} style={{ padding: '12px', color: 'white', border: '1px solid #ddd', textAlign: 'center' }}>
+                  {title}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {statement.t2.rows.map((row, idx) => (
+              <tr key={idx} style={{ backgroundColor: idx % 2 === 0 ? '#f9f9f9' : 'white' }}>
+                {row.map((cell, cellIdx) => (
+                  <td key={cellIdx} style={{ padding: '10px', border: '1px solid #ddd', textAlign: 'center' }}>
+                    {cell}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+          <tfoot>
+            <tr style={{ backgroundColor: '#f0f0f0', fontWeight: 'bold' }}>
+              <td colSpan={statement.t2.headerTitles.length - 1} style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'right' }}>
+                مجموع القبوضات
+              </td>
+              <td style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'center', color: '#10b981' }}>
+                {calculateTotal(statement.t2)}{client.currency}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+
+        {/* Final Balance */}
+        <h2 style={{ fontSize: '22px', marginBottom: '15px', color: '#667eea' }}>الحساب النهائي</h2>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <tbody>
+            <tr style={{ backgroundColor: '#f9f9f9' }}>
+              <td style={{ padding: '12px', border: '1px solid #ddd', fontWeight: 'bold' }}>إجمالي العمليات</td>
+              <td style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'center', fontWeight: 'bold', color: '#10b981' }}>
+                {calculateTotal(statement.t1)}{client.currency}
+              </td>
+            </tr>
+            <tr>
+              <td style={{ padding: '12px', border: '1px solid #ddd', fontWeight: 'bold' }}>مجموع القبوضات</td>
+              <td style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'center', fontWeight: 'bold', color: '#ef4444' }}>
+                {calculateTotal(statement.t2)}{client.currency}
+              </td>
+            </tr>
+            <tr style={{ backgroundColor: '#667eea' }}>
+              <td style={{ padding: '12px', border: '1px solid #ddd', fontWeight: 'bold', color: 'white', fontSize: '18px' }}>
+                الرصيد النهائي
+              </td>
+              <td style={{ padding: '12px', border: '1px solid #ddd', textAlign: 'center', fontWeight: 'bold', color: 'white', fontSize: '18px' }}>
+                {calculateTotal(statement.t1) - calculateTotal(statement.t2)}{client.currency}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
