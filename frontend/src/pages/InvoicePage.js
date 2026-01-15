@@ -172,44 +172,73 @@ function InvoicePage() {
     return total;
   };
 
-  const exportToExcel = () => {
+  const exportToPDF = () => {
     if (!statement || !activeInvoice || !client) return;
 
-    const wb = XLSX.utils.book_new();
-
-    // Operations sheet
-    const opsData = [
-      statement.t1.headerTitles,
-      ...statement.t1.rows,
-      ['', '', '', '', 'إجمالي العمليات', `${calculateTotal(statement.t1)}${client.currency}`]
-    ];
-    const ws1 = XLSX.utils.aoa_to_sheet(opsData);
-    XLSX.utils.book_append_sheet(wb, ws1, 'العمليات');
-
-    // Payments sheet
-    const payData = [
-      statement.t2.headerTitles,
-      ...statement.t2.rows,
-      ['', '', '', '', 'مجموع القبوضات', `${calculateTotal(statement.t2)}${client.currency}`]
-    ];
-    const ws2 = XLSX.utils.aoa_to_sheet(payData);
-    XLSX.utils.book_append_sheet(wb, ws2, 'القبوضات');
-
-    // Final sheet
+    const doc = new jsPDF('p', 'mm', 'a4');
+    
+    // Add Arabic font support
+    doc.setLanguage('ar');
+    
+    // Add title
+    doc.setFontSize(20);
+    doc.text(`${client.name} - ${activeInvoice.name}`, 105, 20, { align: 'center' });
+    
+    doc.setFontSize(12);
+    doc.text(`التاريخ: ${invoiceDate}`, 105, 30, { align: 'center' });
+    
+    // Operations Table
+    doc.setFontSize(16);
+    doc.text('العمليات', 105, 45, { align: 'center' });
+    
+    doc.autoTable({
+      startY: 50,
+      head: [statement.t1.headerTitles],
+      body: statement.t1.rows,
+      styles: { font: 'helvetica', halign: 'right' },
+      headStyles: { fillColor: [102, 126, 234] },
+      foot: [['', '', '', '', 'إجمالي العمليات', `${calculateTotal(statement.t1)}${client.currency}`]],
+      footStyles: { fillColor: [240, 240, 240], fontStyle: 'bold' }
+    });
+    
+    // Payments Table
+    let finalY = doc.lastAutoTable.finalY + 10;
+    doc.setFontSize(16);
+    doc.text('القبوضات', 105, finalY, { align: 'center' });
+    
+    doc.autoTable({
+      startY: finalY + 5,
+      head: [statement.t2.headerTitles],
+      body: statement.t2.rows,
+      styles: { font: 'helvetica', halign: 'right' },
+      headStyles: { fillColor: [102, 126, 234] },
+      foot: [['', '', '', '', 'مجموع القبوضات', `${calculateTotal(statement.t2)}${client.currency}`]],
+      footStyles: { fillColor: [240, 240, 240], fontStyle: 'bold' }
+    });
+    
+    // Final Summary
+    finalY = doc.lastAutoTable.finalY + 10;
     const t1Total = calculateTotal(statement.t1);
     const t2Total = calculateTotal(statement.t2);
     const balance = t1Total - t2Total;
     
-    const finalData = [
-      ['البند', 'القيمة'],
-      ['إجمالي العمليات', `${t1Total}${client.currency}`],
-      ['مجموع القبوضات', `${t2Total}${client.currency}`],
-      ['الرصيد النهائي', `${balance}${client.currency}`]
-    ];
-    const ws3 = XLSX.utils.aoa_to_sheet(finalData);
-    XLSX.utils.book_append_sheet(wb, ws3, 'الحساب النهائي');
-
-    XLSX.writeFile(wb, `فاتورة_${client.name}_${activeInvoice.name}_${invoiceDate}.xlsx`);
+    doc.setFontSize(16);
+    doc.text('الحساب النهائي', 105, finalY, { align: 'center' });
+    
+    doc.autoTable({
+      startY: finalY + 5,
+      head: [['البند', 'القيمة']],
+      body: [
+        ['إجمالي العمليات', `${t1Total}${client.currency}`],
+        ['مجموع القبوضات', `${t2Total}${client.currency}`],
+        ['الرصيد النهائي', `${balance}${client.currency}`]
+      ],
+      styles: { font: 'helvetica', halign: 'right', fontSize: 12 },
+      headStyles: { fillColor: [102, 126, 234] },
+      bodyStyles: { fontStyle: 'bold' }
+    });
+    
+    doc.save(`فاتورة_${client.name}_${activeInvoice.name}_${invoiceDate}.pdf`);
   };
 
   const handlePrint = () => {
