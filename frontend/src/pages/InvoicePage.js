@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import TableEditor from '../components/TableEditor';
-import { generateArabicPDF } from '../utils/pdfHelper';
+import { generatePDFFromElement } from '../utils/pdfHelper';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
