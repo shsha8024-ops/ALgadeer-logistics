@@ -1,6 +1,6 @@
 /* Header Styles */
 .top {
-  background: white;
+  background: var(--color-card-bg);
   padding: 1rem 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
@@ -15,7 +15,7 @@
 .logo {
   width: 50px;
   height: 50px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--gradient);
   color: white;
   display: flex;
   align-items: center;
@@ -29,24 +29,25 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 8px;
   overflow: hidden;
 }
 
 thead {
-  background: #f8fafc;
+  background: var(--color-background);
 }
 
 th, td {
   padding: 12px;
   text-align: right;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
 }
 
 th {
   font-weight: 600;
-  color: #475569;
+  color: var(--color-text-muted);
 }
 
 td[contenteditable="true"] {
@@ -55,12 +56,12 @@ td[contenteditable="true"] {
 }
 
 td[contenteditable="true"]:hover {
-  background: #f8fafc;
+  background: var(--color-background);
 }
 
 td[contenteditable="true"]:focus {
-  outline: 2px solid #667eea;
-  background: white;
+  outline: 2px solid var(--color-primary);
+  background: var(--color-card-bg);
 }
 
 tr.selected-row {
@@ -73,7 +74,7 @@ td.selected-col {
 
 .amount {
   font-weight: 600;
-  color: #059669;
+  color: var(--color-success);
 }
 
 /* Button Styles */
@@ -87,51 +88,58 @@ td.selected-col {
 }
 
 .btn-primary {
-  background: #667eea;
+  background: var(--color-primary);
   color: white;
 }
 
 .btn-primary:hover {
-  background: #5568d3;
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-danger {
-  background: #ef4444;
+  background: var(--color-danger);
   color: white;
 }
 
 .btn-danger:hover {
   background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .btn-ghost {
   background: transparent;
-  border: 1px solid #e2e8f0;
-  color: #475569;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
 }
 
 .btn-ghost:hover {
-  background: #f8fafc;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 /* Input Styles */
 input, select, textarea {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   font-size: 14px;
+  background: var(--color-card-bg);
+  color: var(--color-text);
 }
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 /* Card Styles */
 .card {
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -147,12 +155,12 @@ input:focus, select:focus, textarea:focus {
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-center;
   z-index: 1000;
 }
 
 .sheet {
-  background: white;
+  background: var(--color-card-bg);
   border-radius: 12px;
   padding: 2rem;
   max-width: 500px;
@@ -169,14 +177,15 @@ input:focus, select:focus, textarea:focus {
 .pill {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: #f1f5f9;
+  background: var(--color-background);
   border-radius: 999px;
   font-size: 14px;
-  color: #475569;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
 }
 
 .muted {
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
 .small {
@@ -202,7 +211,7 @@ input:focus, select:focus, textarea:focus {
 .tabs {
   display: flex;
   gap: 1rem;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--color-border);
   margin-bottom: 1rem;
 }
 
@@ -212,19 +221,19 @@ input:focus, select:focus, textarea:focus {
   background: transparent;
   cursor: pointer;
   font-weight: 500;
-  color: #64748b;
+  color: var(--color-text-muted);
   border-bottom: 2px solid transparent;
   margin-bottom: -2px;
   transition: all 0.2s;
 }
 
 .tab-btn.active {
-  color: #667eea;
-  border-bottom-color: #667eea;
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
 
 .tab-btn:hover {
-  color: #475569;
+  color: var(--color-text);
 }
 
 .tab-content {
