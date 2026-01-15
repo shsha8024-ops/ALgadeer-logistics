@@ -135,11 +135,6 @@ function ClientsPage() {
     );
   });
 
-  const getClientBalance = (client) => {
-    // This will be calculated in the backend reports endpoint
-    return '0' + client.currency;
-  };
-
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)' }}>
       {/* Header */}
