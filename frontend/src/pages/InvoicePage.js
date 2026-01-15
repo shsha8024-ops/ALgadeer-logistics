@@ -9,6 +9,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL;
 
 function InvoicePage() {
   const { clientId } = useParams();
+  const { user, logout, isAdmin } = useAuth();
   const [client, setClient] = useState(null);
   const [invoices, setInvoices] = useState([]);
   const [activeInvoice, setActiveInvoice] = useState(null);
