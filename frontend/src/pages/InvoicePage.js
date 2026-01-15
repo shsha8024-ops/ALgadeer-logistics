@@ -396,6 +396,7 @@ function InvoicePage() {
                     onDataChange={handleT1Change}
                     currency={client.currency}
                     tableId="t1"
+                    readOnly={!isAdmin()}
                   />
                 )}
               </div>
@@ -411,6 +412,7 @@ function InvoicePage() {
                     onDataChange={handleT2Change}
                     currency={client.currency}
                     tableId="t2"
+                    readOnly={!isAdmin()}
                   />
                 )}
               </div>
