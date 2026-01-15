@@ -25,26 +25,13 @@ function ReportsPage() {
     }
   };
 
-  const exportToPDF = () => {
-    const tableData = filteredReports.map(report => [
-      report.client.name,
-      report.client.phone,
-      report.client.location,
-      report.invoiceCount.toString(),
-      report.balance
-    ]);
-    
-    const tables = [{
-      head: [['Client - العميل', 'Phone - الهاتف', 'Location - المكان', 'Invoices - عدد الفواتير', 'Balance - الرصيد الكلي']],
-      body: tableData
-    }];
-    
-    const date = new Date().toLocaleDateString('en-US');
-    generateArabicPDF(
-      'Client Reports - تقارير العملاء',
-      `Date - التاريخ: ${date}`,
-      tables,
-      `reports_${date}.pdf`
+  const exportToPDF = async () => {
+    const date = new Date().toLocaleDateString('ar-EG');
+    await generatePDFFromElement(
+      'pdf-reports-content',
+      `تقارير_العملاء_${date}.pdf`,
+      'تقارير العملاء',
+      `التاريخ: ${date}`
     );
   };
 
