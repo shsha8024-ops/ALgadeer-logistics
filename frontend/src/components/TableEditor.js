@@ -96,20 +96,22 @@ function TableEditor({
 
   return (
     <div>
-      <div className="flex gap-2 mb-4 flex-wrap no-print">
-        <button onClick={addRow} className="btn btn-primary text-sm">
-          + سطر
-        </button>
-        <button onClick={deleteRow} className="btn btn-danger text-sm">
-          حذف السطر المحدد
-        </button>
-        <button onClick={addColumn} className="btn btn-primary text-sm">
-          + عمود
-        </button>
-        <button onClick={deleteColumn} className="btn btn-danger text-sm">
-          حذف العمود المحدد
-        </button>
-      </div>
+      {!readOnly && (
+        <div className="flex gap-2 mb-4 flex-wrap no-print">
+          <button onClick={addRow} className="btn btn-primary text-sm">
+            + سطر
+          </button>
+          <button onClick={deleteRow} className="btn btn-danger text-sm">
+            حذف السطر المحدد
+          </button>
+          <button onClick={addColumn} className="btn btn-primary text-sm">
+            + عمود
+          </button>
+          <button onClick={deleteColumn} className="btn btn-danger text-sm">
+            حذف العمود المحدد
+          </button>
+        </div>
+      )}
 
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
