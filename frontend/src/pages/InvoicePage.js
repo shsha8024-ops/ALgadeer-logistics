@@ -204,7 +204,9 @@ function InvoicePage() {
       <header className="top no-print" style={{ background: 'var(--color-card-bg)' }}>
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="brand flex items-center gap-4">
-            <div className="logo">غ</div>
+            <div className="logo">
+              <img src="/logo-square.png" alt="الغدير" />
+            </div>
             <div>
               <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>فواتير العميل</h1>
               <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
