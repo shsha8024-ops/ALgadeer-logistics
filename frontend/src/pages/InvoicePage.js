@@ -385,12 +385,12 @@ function InvoicePage() {
               الغدير نقل و تخليص — {client.name} — {activeInvoice.name}
             </p>
 
-            <div className="flex gap-2 mb-6 no-print">
-              <button onClick={handlePrint} className="btn btn-ghost text-sm">
+            <div className="flex gap-3 mb-6 no-print">
+              <button onClick={handlePrint} className="btn btn-primary text-sm">
                 🖨️ طباعة
               </button>
-              <button onClick={exportToExcel} className="btn btn-ghost text-sm">
-                📄 Excel
+              <button onClick={exportToPDF} className="btn btn-primary text-sm">
+                📄 PDF
               </button>
             </div>
 
