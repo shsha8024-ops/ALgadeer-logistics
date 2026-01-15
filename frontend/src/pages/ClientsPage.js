@@ -337,6 +337,7 @@ function ClientsPage() {
               </button>
             </form>
           </section>
+          )}
         </div>
       </main>
 
