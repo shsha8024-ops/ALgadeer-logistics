@@ -47,7 +47,7 @@ function ThemeSwitcher() {
         🎨
       </button>
 
-      <style jsx>{`
+      <style>{`
         @keyframes slideUp {
           from {
             opacity: 0;
