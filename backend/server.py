@@ -305,38 +305,78 @@ async def update_statement(invoice_id: str, statement: Statement):
 # Reports Endpoint
 @app.get("/api/reports")
 async def get_reports():
-    clients = await clients_collection.find().to_list(1000)
+    # Use aggregation pipeline for better performance
+    pipeline = [
+        {
+            "$lookup": {
+                "from": "invoices",
+                "localField": "id",
+                "foreignField": "clientId",
+                "as": "invoices"
+            }
+        },
+        {
+            "$unwind": {
+                "path": "$invoices",
+                "preserveNullAndEmptyArrays": True
+            }
+        },
+        {
+            "$lookup": {
+                "from": "statements",
+                "localField": "invoices.id",
+                "foreignField": "invoiceId",
+                "as": "statements"
+            }
+        },
+        {
+            "$group": {
+                "_id": "$id",
+                "client": {"$first": "$$ROOT"},
+                "invoiceCount": {"$sum": {"$cond": [{"$ifNull": ["$invoices.id", False]}, 1, 0]}},
+                "statements": {"$push": {"$arrayElemAt": ["$statements", 0]}}
+            }
+        }
+    ]
+    
+    results = await clients_collection.aggregate(pipeline).to_list(100)
     reports = []
     
-    for client in clients:
+    for result in results:
+        client = result["client"]
         client["_id"] = str(client["_id"])
-        invoices = await invoices_collection.find({"clientId": client["id"]}).to_list(1000)
+        
+        # Remove nested fields from aggregation
+        if "invoices" in client:
+            del client["invoices"]
+        if "statements" in client:
+            del client["statements"]
         
         total_operations = 0
         total_payments = 0
         
-        for invoice in invoices:
-            statement = await statements_collection.find_one({"invoiceId": invoice["id"]})
+        # Calculate totals from statements
+        for statement in result.get("statements", []):
             if statement:
                 # Calculate operations total
                 for row in statement.get("t1", {}).get("rows", []):
                     if row:
                         amount_str = str(row[-1]) if len(row) > 0 else "0"
-                        amount = float(''.join(filter(lambda x: x.isdigit() or x == '.', amount_str)) or 0)
+                        amount = float(''.join(filter(lambda x: x.isdigit() or x == '.' or x == '-', amount_str)) or 0)
                         total_operations += amount
                 
                 # Calculate payments total
                 for row in statement.get("t2", {}).get("rows", []):
                     if row:
                         amount_str = str(row[-1]) if len(row) > 0 else "0"
-                        amount = float(''.join(filter(lambda x: x.isdigit() or x == '.', amount_str)) or 0)
+                        amount = float(''.join(filter(lambda x: x.isdigit() or x == '.' or x == '-', amount_str)) or 0)
                         total_payments += amount
         
         balance = total_operations - total_payments
         
         reports.append({
             "client": client,
-            "invoiceCount": len(invoices),
+            "invoiceCount": result.get("invoiceCount", 0),
             "balance": f"{balance}{client.get('currency', '$')}"
         })
     
