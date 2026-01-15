@@ -4,7 +4,8 @@ function TableEditor({
   tableData, 
   onDataChange, 
   currency,
-  tableId 
+  tableId,
+  readOnly = false
 }) {
   const [data, setData] = useState(tableData);
   const [selectedRow, setSelectedRow] = useState(null);
